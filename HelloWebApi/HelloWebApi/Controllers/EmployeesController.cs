@@ -25,9 +25,22 @@ namespace HelloWebApi.Controllers
         }
 
         // GET api/employees/12345
-        public Employee Get(int id)
+        public HttpResponseMessage Get(int id)
         {
-            return list.FirstOrDefault(e => e.Id == id);
+            HttpResponseMessage msg = null;
+
+            var employee = list.FirstOrDefault(e => e.Id == id);
+
+            if (employee == null)
+            {
+                msg = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee not found!");
+            }
+            else
+            {
+                msg = Request.CreateResponse<Employee>(HttpStatusCode.OK, employee);
+            }
+
+            return msg;
         }
 
         // POST api/employees
@@ -49,7 +62,7 @@ namespace HelloWebApi.Controllers
         // DELETE api/employees/12345
         public void Delete(int id)
         {
-            Employee employee = Get(id);
+            Employee employee = list.FirstOrDefault(e => e.Id == id);
             list.Remove(employee);
         }
     }
