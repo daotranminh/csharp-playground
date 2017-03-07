@@ -66,7 +66,13 @@ namespace HelloWebApi.Controllers
         // PUT api/employees/12345
         public HttpResponseMessage Put(int id, Employee employee)
         {
-            if (!list.Any(e => e.Id == id))
+            int index = list.ToList().FindIndex(e => e.Id == id);
+            if (index >= 0)
+            {
+                list[index] = employee;
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
             {
                 list.Add(employee);
 
@@ -77,8 +83,6 @@ namespace HelloWebApi.Controllers
                 response.Headers.Location = new Uri(uri);
                 return response;
             }
-
-            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         // DELETE api/employees/12345
