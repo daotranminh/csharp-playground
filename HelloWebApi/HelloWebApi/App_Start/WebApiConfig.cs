@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using System.Diagnostics;
+using HelloWebApi.Models;
 
 namespace HelloWebApi
 {
@@ -25,6 +27,15 @@ namespace HelloWebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            foreach (var formatter in config.Formatters)
+            {
+                Trace.WriteLine(formatter.GetType().Name);
+                Trace.WriteLine("   CanReadType:  " + formatter.CanReadType(typeof(Employee)));
+                Trace.WriteLine("   CanWriteType: " + formatter.CanWriteType(typeof(Employee)));
+                Trace.WriteLine("   Base:         " + formatter.GetType().BaseType.Name);
+                Trace.WriteLine("   Media Types:  " + String.Join(", ", formatter.SupportedMediaTypes));
+            }
         }
     }
 }
