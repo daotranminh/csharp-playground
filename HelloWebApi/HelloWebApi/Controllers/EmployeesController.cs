@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.OData;
 
 namespace HelloWebApi.Controllers
 {
@@ -98,6 +99,21 @@ namespace HelloWebApi.Controllers
                 response.Headers.Location = new Uri(uri);
                 return response;
             }
+        }
+
+        // PATCH api/employees/12345
+        public HttpResponseMessage Patch(int id, Delta<Employee> deltaEmployee)
+        {
+            var employee = list.FirstOrDefault(e => e.Id == id);
+
+            if (employee == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with id = " + id + "not found!");
+            }
+
+            deltaEmployee.Patch(employee);
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         // DELETE api/employees/12345
