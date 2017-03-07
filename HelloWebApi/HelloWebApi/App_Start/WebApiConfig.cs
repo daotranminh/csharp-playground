@@ -33,10 +33,13 @@ namespace HelloWebApi
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("frmt", "json", new MediaTypeHeaderValue("application/json")));
 
+            config.Formatters.JsonFormatter.MediaTypeMappings.Add(
+                new RequestHeaderMapping("X-Media", "json", StringComparison.OrdinalIgnoreCase, false,
+                              new MediaTypeHeaderValue("application/json")));
+
             config.Formatters.XmlFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("frmt", "xml", new MediaTypeHeaderValue("application/xml")));
-
-
+            
             foreach (var formatter in config.Formatters)
             {
                 Trace.WriteLine(formatter.GetType().Name);
