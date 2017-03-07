@@ -64,10 +64,21 @@ namespace HelloWebApi.Controllers
         }
 
         // PUT api/employees/12345
-        public void Put(int id, Employee employee)
+        public HttpResponseMessage Put(int id, Employee employee)
         {
-            int index = list.ToList().FindIndex(e => e.Id == id);
-            list[index] = employee;
+            if (!list.Any(e => e.Id == id))
+            {
+                list.Add(employee);
+
+                HttpResponseMessage response
+                    = Request.CreateResponse<Employee>(HttpStatusCode.Created, employee);
+
+                string uri = Url.Link("DefaultApi", new { id = employee.Id });
+                response.Headers.Location = new Uri(uri);
+                return response;
+            }
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         // DELETE api/employees/12345
