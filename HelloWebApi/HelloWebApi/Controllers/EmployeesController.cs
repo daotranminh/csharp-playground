@@ -12,9 +12,9 @@ namespace HelloWebApi.Controllers
     {
         private static IList<Employee> list = new List<Employee>()
         {
-            new Employee() { Id = 12345, FirstName = "John", LastName = "Human" },
-            new Employee() { Id = 12346, FirstName = "Jane", LastName = "Public" },
-            new Employee() { Id = 12347, FirstName = "Joseph", LastName = "Law" }
+            new Employee() { Id = 12345, FirstName = "John", LastName = "Human", Department = 2 },
+            new Employee() { Id = 12346, FirstName = "Jane", LastName = "Public", Department = 3 },
+            new Employee() { Id = 12347, FirstName = "Joseph", LastName = "Law", Department = 2 }
         };
 
         // Action methods
@@ -41,6 +41,11 @@ namespace HelloWebApi.Controllers
             }
 
             return msg;
+        }
+
+        public IEnumerable<Employee> GetByDepartment(int department)
+        {
+            return list.Where(e => e.Department == department);
         }
 
         // POST api/employees
