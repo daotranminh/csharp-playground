@@ -7,6 +7,8 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Diagnostics;
 using HelloWebApi.Models;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
 
 namespace HelloWebApi
 {
@@ -27,6 +29,13 @@ namespace HelloWebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.MediaTypeMappings.Add(
+                new QueryStringMapping("frmt", "json", new MediaTypeHeaderValue("application/json")));
+
+            config.Formatters.XmlFormatter.MediaTypeMappings.Add(
+                new QueryStringMapping("frmt", "xml", new MediaTypeHeaderValue("application/xml")));
+
 
             foreach (var formatter in config.Formatters)
             {
