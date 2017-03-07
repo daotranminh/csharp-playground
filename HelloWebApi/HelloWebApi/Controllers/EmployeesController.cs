@@ -63,6 +63,21 @@ namespace HelloWebApi.Controllers
             return response;
         }
 
+        // POST api/employees/id
+        public HttpResponseMessage Post(int id, Employee employee)
+        {
+            int index = list.ToList().FindIndex(e => e.Id == id);
+
+            if (index >= 0)
+            {
+                list[index] = employee;
+
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with id " + id + "not found!");
+        }
+
         // PUT api/employees/12345
         public HttpResponseMessage Put(int id, Employee employee)
         {
