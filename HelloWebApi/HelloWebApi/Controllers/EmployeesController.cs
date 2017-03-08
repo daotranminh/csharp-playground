@@ -28,20 +28,36 @@ namespace HelloWebApi.Controllers
         // GET api/employees/12345
         public HttpResponseMessage Get(int id)
         {
+            string blackListed = "application/xml";
+
+            var allowedFormatters = Configuration.Formatters
+                                        .Where(f => !f.SupportedMediaTypes
+                                                    .Any(m => m.MediaType
+                                                                .Equals(blackListed,
+                                                                        StringComparison.OrdinalIgnoreCase)));
+            var result = Configuration.Services.GetContentNegotiator()
+                            .Negotiate(typeof(Employee), Request, allowedFormatters);
+
             HttpResponseMessage msg = null;
-
-            var employee = list.FirstOrDefault(e => e.Id == id);
-
-            if (employee == null)
+            if (result == null)
             {
-                msg = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee not found!");
+                msg = Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, "Output format not allowed");
             }
             else
             {
-                msg = new HttpResponseMessage()
+                var employee = list.FirstOrDefault(e => e.Id == id);
+
+                if (employee == null)
                 {
-                    Content = new ObjectContent<Employee>(employee, Configuration.Formatters.JsonFormatter)
-                };
+                    msg = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee not found!");
+                }
+                else
+                {
+                    msg = new HttpResponseMessage()
+                    {
+                        Content = new ObjectContent<Employee>(employee, result.Formatter, result.MediaType)
+                    };
+                }
             }
 
             return msg;
