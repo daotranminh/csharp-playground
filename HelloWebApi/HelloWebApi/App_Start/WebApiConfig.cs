@@ -30,15 +30,14 @@ namespace HelloWebApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            config.Formatters.Add(new FixedWidthTextMediaFormatter());
+
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("frmt", "json", new MediaTypeHeaderValue("application/json")));
-
+            
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(
                 new RequestHeaderMapping("X-Media", "json", StringComparison.OrdinalIgnoreCase, false,
                               new MediaTypeHeaderValue("application/json")));
-
-            config.Formatters.JsonFormatter.MediaTypeMappings.Add(
-                new IPBasedMediaTypeMapping());
 
             config.Formatters.XmlFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("frmt", "xml", new MediaTypeHeaderValue("application/xml")));
