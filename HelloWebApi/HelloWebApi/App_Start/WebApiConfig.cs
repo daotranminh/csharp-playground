@@ -37,6 +37,9 @@ namespace HelloWebApi
                 new RequestHeaderMapping("X-Media", "json", StringComparison.OrdinalIgnoreCase, false,
                               new MediaTypeHeaderValue("application/json")));
 
+            config.Formatters.JsonFormatter.MediaTypeMappings.Add(
+                new IPBasedMediaTypeMapping());
+
             config.Formatters.XmlFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("frmt", "xml", new MediaTypeHeaderValue("application/xml")));
             
