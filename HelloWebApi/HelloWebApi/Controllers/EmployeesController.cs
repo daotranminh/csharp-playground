@@ -20,9 +20,22 @@ namespace HelloWebApi.Controllers
 
         // Action methods
         // GET api/employees
-        public IEnumerable<Employee> Get()
+        //public IEnumerable<Employee> Get()
+        public HttpResponseMessage Get()
         {
-            return list;
+            //return list;
+            var values = list.Select(
+                e => new {
+                    Identifier = e.Id,
+                    Name = e.FirstName + " " + e.LastName
+                });
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ObjectContent(values.GetType(), values, Configuration.Formatters.JsonFormatter)
+            };
+
+            return response;
         }
 
         // GET api/employees/12345
