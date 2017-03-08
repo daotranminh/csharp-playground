@@ -38,7 +38,10 @@ namespace HelloWebApi.Controllers
             }
             else
             {
-                msg = Request.CreateResponse<Employee>(HttpStatusCode.OK, employee);
+                msg = new HttpResponseMessage()
+                {
+                    Content = new ObjectContent<Employee>(employee, Configuration.Formatters.JsonFormatter)
+                };
             }
 
             return msg;
