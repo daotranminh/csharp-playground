@@ -1,0 +1,11 @@
+<Employee xmlns="http://schemas.datacontract.org/2004/07/HelloWebApi.Models">
+	
+	<FirstName>John</FirstName>
+	
+	<Id>12345</Id>
+	
+	<LastName>Human</LastName>
+	
+	<Department>4</Department>
+
+</Employee>

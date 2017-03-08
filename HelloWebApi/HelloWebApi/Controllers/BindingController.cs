@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelloWebApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace HelloWebApi.Controllers
     {
         public void Post(HttpRequestMessage req)
         {
-            string content = req.Content.ReadAsStringAsync().Result;
+            var content = req.Content.ReadAsAsync<Employee>().Result;
             int id = Int32.Parse(req.RequestUri.Segments.Last());
 
-            Trace.WriteLine(content);
+            Trace.WriteLine(content.Id);
+            Trace.WriteLine(content.FirstName);
+            Trace.WriteLine(content.LastName);
+            Trace.WriteLine(content.Department);
             Trace.WriteLine(id);
         }
     }
