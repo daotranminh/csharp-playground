@@ -30,6 +30,8 @@ namespace HelloWebApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            config.EnableSystemDiagnosticsTracing();
+
             config.Formatters.Add(new FixedWidthTextMediaFormatter());
 
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(

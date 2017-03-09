@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace HelloWebApi.Controllers
@@ -23,12 +24,18 @@ namespace HelloWebApi.Controllers
             Trace.WriteLine(id);
         }*/
 
-        public void Post(int id, string firstName, [FromBody] int locationId, Guid guid)
+        /*public void Post(int id, string firstName, [FromBody] int locationId, Guid guid)
         {
             Trace.WriteLine(id);
             Trace.WriteLine(firstName);
             Trace.WriteLine(locationId);
             Trace.WriteLine(guid);
+        }*/
+
+        public void Post(FormDataCollection data)
+        {
+            Trace.WriteLine(data.Get("firstName"));
+            Trace.WriteLine(data.Get("lastName"));
         }
     }
 }
