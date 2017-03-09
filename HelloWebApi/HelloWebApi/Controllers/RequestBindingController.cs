@@ -9,9 +9,9 @@ using System.Web.Http;
 
 namespace HelloWebApi.Controllers
 {
-    public class BindingController : ApiController
+    public class RequestBindingController : ApiController
     {
-        public void Post(HttpRequestMessage req)
+        /*public void Post(HttpRequestMessage req)
         {
             var content = req.Content.ReadAsAsync<Employee>().Result;
             int id = Int32.Parse(req.RequestUri.Segments.Last());
@@ -21,6 +21,14 @@ namespace HelloWebApi.Controllers
             Trace.WriteLine(content.LastName);
             Trace.WriteLine(content.Department);
             Trace.WriteLine(id);
+        }*/
+
+        public void Post(int id, string firstName, [FromBody] int locationId, Guid guid)
+        {
+            Trace.WriteLine(id);
+            Trace.WriteLine(firstName);
+            Trace.WriteLine(locationId);
+            Trace.WriteLine(guid);
         }
     }
 }

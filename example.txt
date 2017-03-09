@@ -9,3 +9,7 @@
 	<Department>4</Department>
 
 </Employee>
+
+http://localhost:56278/api/requestbinding/12345?firstName=John&locationId=12&guid=31c9359d-d332-4703-a896-7e9655eff171
+
+{"Id":12345,"FirstName":"John","LastName":"Human","Department":4}
