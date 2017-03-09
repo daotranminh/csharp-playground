@@ -11,5 +11,6 @@ namespace HelloWebApi.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Department { get; set; }
+        public DateTime Doj { get; set; }
     }
 }

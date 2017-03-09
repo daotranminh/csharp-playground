@@ -34,6 +34,12 @@ namespace HelloWebApi
 
             config.Formatters.Add(new FixedWidthTextMediaFormatter());
 
+            //config.Formatters.JsonFormatter.SerializerSettings.Culture =
+            //    new System.Globalization.CultureInfo("en-GB");
+
+            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new DateTimeConverter());
+            config.MessageHandlers.Add(new CultureHandler());
+
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(
                 new QueryStringMapping("frmt", "json", new MediaTypeHeaderValue("application/json")));
             

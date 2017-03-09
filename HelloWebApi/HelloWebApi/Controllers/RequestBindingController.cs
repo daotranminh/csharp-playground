@@ -32,10 +32,15 @@ namespace HelloWebApi.Controllers
             Trace.WriteLine(guid);
         }*/
 
-        public void Post(FormDataCollection data)
+        /*public void Post(FormDataCollection data)
         {
             Trace.WriteLine(data.Get("firstName"));
             Trace.WriteLine(data.Get("lastName"));
+        }*/
+
+        public void Post(Employee employee)
+        {
+
         }
     }
 }
