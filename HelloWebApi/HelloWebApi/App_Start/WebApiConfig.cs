@@ -36,6 +36,16 @@ namespace HelloWebApi
             config.Services.Add(typeof(System.Web.Http.ValueProviders.ValueProviderFactory),
                                 new HeaderValueProviderFactory());
 
+            var rules = config.ParameterBindingRules;
+            rules.Insert(0, p =>
+            {
+                if (p.ParameterType == typeof(Employee)) {
+                    return new AllRequestParameterBinding(p);
+                }
+
+                return null;
+            });
+
             config.Formatters.Add(new FixedWidthTextMediaFormatter());
 
             //config.Formatters.JsonFormatter.SerializerSettings.Culture =
