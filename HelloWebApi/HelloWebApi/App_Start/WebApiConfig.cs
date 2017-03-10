@@ -9,6 +9,7 @@ using System.Diagnostics;
 using HelloWebApi.Models;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
+using HelloWebApi.Providers;
 
 namespace HelloWebApi
 {
@@ -31,6 +32,9 @@ namespace HelloWebApi
             );
 
             config.EnableSystemDiagnosticsTracing();
+
+            config.Services.Add(typeof(System.Web.Http.ValueProviders.ValueProviderFactory),
+                                new HeaderValueProviderFactory());
 
             config.Formatters.Add(new FixedWidthTextMediaFormatter());
 

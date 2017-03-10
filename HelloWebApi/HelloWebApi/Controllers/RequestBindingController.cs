@@ -12,11 +12,21 @@ namespace HelloWebApi.Controllers
 {
     public class RequestBindingController : ApiController
     {
-        public HttpResponseMessage Get(Shift shift)
+        /*public HttpResponseMessage Get(Shift shift)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("")
+            };
+
+            return response;
+        }*/
+
+        public HttpResponseMessage Get([System.Web.Http.ModelBinding.ModelBinder]IEnumerable<string> ifmatch)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ifmatch.First().ToString())
             };
 
             return response;
