@@ -12,6 +12,16 @@ namespace HelloWebApi.Controllers
 {
     public class RequestBindingController : ApiController
     {
+        public HttpResponseMessage Get(Shift shift)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("")
+            };
+
+            return response;
+        }
+
         /*public void Post(HttpRequestMessage req)
         {
             var content = req.Content.ReadAsAsync<Employee>().Result;
