@@ -23,7 +23,7 @@ namespace HelloWebApi.Models
 
         public override bool CanReadType(Type type)
         {
-            return false;
+            return (type == typeof(Employee));
         }
 
         public override bool CanWriteType(Type type)
@@ -54,6 +54,30 @@ namespace HelloWebApi.Models
                         }
                         await writer.FlushAsync();
                     }
+                }
+            }
+        }
+
+        public async override Task<object> ReadFromStreamAsync(Type type,
+                                                               Stream readStream,
+                                                               HttpContent content,
+                                                               IFormatterLogger formatterLogger)
+        {
+            using (readStream)
+            {
+                Encoding encoding = SelectCharacterEncoding(content.Headers);
+
+                using (var reader = new StreamReader(readStream, encoding))
+                {
+                    string messageBody = await reader.ReadToEndAsync();
+
+                    var employee = new Employee();
+
+                    employee.Id = Int32.Parse(messageBody.Substring(0, 6));
+                    employee.FirstName = messageBody.Substring(6, 20).Trim();
+                    employee.LastName = messageBody.Substring(26, 20).Trim();
+
+                    return employee;
                 }
             }
         }
