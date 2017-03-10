@@ -1,4 +1,5 @@
 ﻿using HelloWebApi.Models;
+using HelloWebApi.Providers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 namespace HelloWebApi.Controllers
 {
@@ -22,7 +24,7 @@ namespace HelloWebApi.Controllers
             return response;
         }*/
 
-        public HttpResponseMessage Get([System.Web.Http.ModelBinding.ModelBinder]IEnumerable<string> ifmatch)
+        /*public HttpResponseMessage Get([System.Web.Http.ModelBinding.ModelBinder]IEnumerable<string> ifmatch)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -30,6 +32,21 @@ namespace HelloWebApi.Controllers
             };
 
             return response;
+        }*/
+
+        public HttpResponseMessage Get([ModelBinder(typeof(TalentScoutModelBinderProvider))]TalentScout scout)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("")
+            };
+
+            return response;
+        }
+
+        public void Put(int id, Employee employee)
+        {
+
         }
 
         /*public void Post(HttpRequestMessage req)
