@@ -17,7 +17,7 @@ namespace RequestValidation.Models
         [MaxLength(20, ErrorMessage="You can enter only 20 characters!")]
         public string LastName { get; set; }
 
-        [RegularExpression("[0-1][0-9]")]
-        public string Department { get; set; }
+        [MemberRange(0, 9)]
+        public List<int> Department { get; set; }
     }
 }
