@@ -217,6 +217,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LimitCheckerAttribute.cs" />
     <Compile Include="Models\MemberRangeAttribute.cs" />
     <Compile Include="Models\ValidationErrorHandlerFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
