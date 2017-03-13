@@ -6,23 +6,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RequestValidation.Models
 {
-    public class Employee
+    public class Employee : IValidatableObject
     {
-        [Range(10000, 99999)]
+        private const decimal PERCENTAGE = 0.75M;
+
         public int Id { get; set; }
 
         public string FirstName { get; set; }
 
-        [Required]
-        [MaxLength(20, ErrorMessage="You can enter only 20 characters!")]
         public string LastName { get; set; }
-
-        [MemberRange(0, 9)]
-        public List<int> Department { get; set; }
 
         public decimal AnnualIncome { get; set; }
 
-        [LimitChecker("AnnualIncome", 75)]
         public decimal Contribution { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (this.Id < 10000 || this.Id > 99999)
+                yield return new ValidationResult("Id must be in the range 10000-99999");
+
+            if (String.IsNullOrEmpty(this.LastName))
+                yield return new ValidationResult("LastName is mandatory");
+            else if (this.LastName.Length > 20)
+                yield return new ValidationResult("You can enter only 20 charaters");
+
+            if (this.Contribution > Decimal.Zero &&
+                this.Contribution > this.AnnualIncome * PERCENTAGE)
+                yield return new ValidationResult("You can contribute a maximum of 75% of your annual income to 401K");
+        }
     }
 }
