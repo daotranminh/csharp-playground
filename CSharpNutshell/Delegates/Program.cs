@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Delegates
 {
+    // Basic part
     delegate int Transformer(int x);
     delegate void TransformerVec(int[] vals);
+
+    // More realistic multicast delegate example
+    delegate void ProgressReporter(int percentCompleted);
 
     class Program
     {
         static void Main(string[] args)
         {
+            // Basic delegates
             Transformer t = Square;
             Console.WriteLine(t(3));
 
@@ -32,9 +37,15 @@ namespace Delegates
                 Console.Write(i + " ");
             Console.WriteLine();
 
+            // More realistic multicast delegate example
+            ProgressReporter p = WriteProgressToConsole;
+            p += WriteProgressToFile;
+            Util.HardWork(p);
+
             Console.ReadLine();
         }
 
+        // Basic part
         static int Square(int x) { return x * x; }
 
         static void SquareVec(int[] vals)
@@ -48,6 +59,17 @@ namespace Delegates
             for (int i = 0; i < vals.Length; i++)
                 vals[i] = vals[i] * vals[i] * vals[i];
         }
+
+        // More realistic multicast delegate example
+        static void WriteProgressToConsole(int percentCompleted)
+        {
+            Console.WriteLine(percentCompleted);
+        }
+
+        static void WriteProgressToFile(int percentCompleted)
+        {
+            System.IO.File.WriteAllText("progress.txt", percentCompleted.ToString());
+        }
     }
 
     class Util
@@ -56,6 +78,15 @@ namespace Delegates
         {
             for (int i = 0; i < values.Length; i++)
                 values[i] = t(values[i]);
+        }
+
+        public static void HardWork(ProgressReporter p)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                p(i * 10);                           // Invoke delegate
+                System.Threading.Thread.Sleep(100);  // Simulate hardwork
+            }
         }
     }
 }
