@@ -13,6 +13,8 @@ namespace Delegates
     // More realistic multicast delegate example
     delegate void ProgressReporter(int percentCompleted);
 
+    delegate T GenericTransformer<T>(T arg);
+
     class Program
     {
         static void Main(string[] args)
@@ -24,13 +26,16 @@ namespace Delegates
             int[] values = { 1, 2, 3 };
             Util.Transform(values, t);
 
+            GenericTransformer<int> gt = Square;
+            Util.GenericTransform(values, gt);
+
             foreach (int i in values)
                 Console.Write(i + " ");
             Console.WriteLine();
 
             // Multicast delegates
             TransformerVec tv = SquareVec;
-            tv += CubeVec;
+            tv += DecreaseVec;
 
             tv(values);
             foreach (int i in values)
@@ -56,6 +61,12 @@ namespace Delegates
                 vals[i] = vals[i] * vals[i];
         }
 
+        static void DecreaseVec(int[] vals)
+        {
+            for (int i = 0; i < vals.Length; i++)
+                vals[i] = vals[i] - 1;
+        }
+
         static void CubeVec(int[] vals)
         {
             for (int i = 0; i < vals.Length; i++)
@@ -77,6 +88,12 @@ namespace Delegates
     class Util
     {
         public static void Transform(int[] values, Transformer t)
+        {
+            for (int i = 0; i < values.Length; i++)
+                values[i] = t(values[i]);
+        }
+
+        public static void GenericTransform<T>(T[] values, GenericTransformer<T> t)
         {
             for (int i = 0; i < values.Length; i++)
                 values[i] = t(values[i]);
