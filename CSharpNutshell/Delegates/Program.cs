@@ -38,7 +38,9 @@ namespace Delegates
             Console.WriteLine();
 
             // More realistic multicast delegate example
-            ProgressReporter p = WriteProgressToConsole;
+            //ProgressReporter p = WriteProgressToConsole;
+            Util util = new Util();
+            ProgressReporter p = util.InstanceProgress;
             p += WriteProgressToFile;
             Util.HardWork(p);
 
@@ -88,5 +90,11 @@ namespace Delegates
                 System.Threading.Thread.Sleep(100);  // Simulate hardwork
             }
         }
+
+        public void InstanceProgress(int percentCompleted)
+        {
+            Console.WriteLine(percentCompleted);
+        }
+
     }
 }
