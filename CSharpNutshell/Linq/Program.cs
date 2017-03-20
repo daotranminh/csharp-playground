@@ -78,7 +78,35 @@ namespace Linq
                     orderby noVowels
                     select noVowels;
 
-    PrintResult(query4);
+            PrintResult(query4);
+
+            // Projection strategies
+            IEnumerable<TempProjectionItem> temp =
+                from n in names
+                select new TempProjectionItem
+                {
+                    Original = n,
+                    Vowelless = n.Replace("a", "").Replace("e", "").Replace("i", "")
+                                 .Replace("o", "").Replace("u", "")
+                };
+
+            IEnumerable<string> query5 =
+                from item in temp
+                where item.Vowelless.Length > 2
+                select item.Original;
+
+            PrintResult(query5);
+
+            // The "let" keyword
+            IEnumerable<string> query6 =
+                from n in names
+                let voweless = n.Replace("a", "").Replace("e", "").Replace("i", "")
+                                .Replace("o", "").Replace("u", "")
+                where voweless.Length > 2
+                orderby voweless
+                select n;
+
+            PrintResult(query6);
 
             Console.ReadLine();
         }
@@ -90,5 +118,11 @@ namespace Linq
 
             Console.WriteLine();
         }
+    }
+
+    class TempProjectionItem
+    {
+        public string Original;     // original name
+        public string Vowelless;    // vowel-stripped name
     }
 }
