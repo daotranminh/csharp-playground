@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Linq
@@ -49,6 +50,35 @@ namespace Linq
                 select n;
 
             PrintResult(query3);
+
+            // Progressive Query Building
+            IEnumerable<string> query4 = names
+                .Select  (n => Regex.Replace(n, "[aeiou]", ""))
+                .Where   (n => n.Length > 2)
+                .OrderBy (n => n);
+
+            query4 =
+                from n in names
+                select n.Replace("a", "").Replace("e", "").Replace("i", "")
+                        .Replace("o", "").Replace("u", "");
+
+            query4 =
+                from    n in query4
+                where   n.Length > 2
+                orderby n
+                select  n;
+
+            // using into
+            query4 =
+                from n in names
+                select n.Replace("a", "").Replace("e", "").Replace("i", "")
+                        .Replace("o", "").Replace("u", "")
+                into noVowels
+                    where noVowels.Length > 2
+                    orderby noVowels
+                    select noVowels;
+
+    PrintResult(query4);
 
             Console.ReadLine();
         }
