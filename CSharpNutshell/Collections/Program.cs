@@ -29,6 +29,13 @@ namespace Collections
             while (ie2.MoveNext()) Console.WriteLine(ie2.Current);
             Console.WriteLine();
 
+            Zoo zoo = new Zoo();
+            zoo.Animals.Add(new Animal("Kangoroo", 10));
+            zoo.Animals.Add(new Animal("Mr Sea Lion", 20));
+
+            foreach (Animal a in zoo.Animals)
+                Console.WriteLine(a.Name);
+
             Console.ReadLine();
         }
     }
