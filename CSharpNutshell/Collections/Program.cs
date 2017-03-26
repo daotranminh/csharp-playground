@@ -41,6 +41,14 @@ namespace Collections
             foreach (Animal a in zoo.Animals)
                 Console.WriteLine(a.Name + " " + a.Popularity.ToString() + " " + a.Zoo.Name);
 
+            // Comparer
+            Customer c1 = new Customer("Bloggs", "Joe");
+            Customer c2 = new Customer("Bloggs", "Joe");
+
+            var d = new Dictionary<Customer, string>(new LastFirstEqComparer());
+            d[c1] = "Joe";
+            Console.WriteLine(d.ContainsKey(c2));
+
             Console.ReadLine();
         }
     }

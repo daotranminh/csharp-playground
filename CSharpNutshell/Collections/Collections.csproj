@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animal.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="MyCollection1.cs" />
     <Compile Include="MyGenCollection1.cs" />
     <Compile Include="MyIntList.cs" />
