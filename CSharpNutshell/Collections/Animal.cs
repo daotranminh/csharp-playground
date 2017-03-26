@@ -9,7 +9,17 @@ namespace Collections
 {
     class Animal
     {
-        public string Name;
+        string name;
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (Zoo != null) Zoo.Animals.NotifyNameChange(this, value);
+                name = value;
+            }
+        }
+
         public int Popularity;
         public Zoo Zoo { get; internal set; }
 
@@ -20,12 +30,22 @@ namespace Collections
         }
     }
 
-    class AnimalCollection : Collection<Animal>
+    class AnimalCollection : KeyedCollection<string, Animal>
     {
         Zoo zoo;
         public AnimalCollection(Zoo zoo)
         {
             this.zoo = zoo;
+        }
+
+        internal void NotifyNameChange(Animal a, string newName)
+        {
+            this.ChangeItemKey(a, newName);
+        }
+
+        protected override string GetKeyForItem(Animal item)
+        {
+            return item.Name;
         }
 
         protected override void InsertItem(int index, Animal item)

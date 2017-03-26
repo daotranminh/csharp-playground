@@ -30,8 +30,13 @@ namespace Collections
             Console.WriteLine();
 
             Zoo zoo = new Zoo("Vienna");
-            zoo.Animals.Add(new Animal("Kangoroo", 10));
+            zoo.Animals.Add(new Animal("Kangaroo", 10));
             zoo.Animals.Add(new Animal("Mr Sea Lion", 20));
+
+            Console.WriteLine(zoo.Animals[0].Popularity);
+            Console.WriteLine(zoo.Animals["Mr Sea Lion"].Popularity);
+            zoo.Animals["Kangaroo"].Name = "Mr Roo";
+            Console.WriteLine(zoo.Animals["Mr Roo"].Popularity);
 
             foreach (Animal a in zoo.Animals)
                 Console.WriteLine(a.Name + " " + a.Popularity.ToString() + " " + a.Zoo.Name);
